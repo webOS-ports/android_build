@@ -13,6 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+ifeq (true, false)
+
 LOCAL_PATH := $(call my-dir)
 
 # the signapk tool (a .jar application used to sign packages)
@@ -28,4 +31,6 @@ ifeq ($(TARGET_BUILD_APPS),)
 # The post-build signing tools need signapk.jar, but we don't
 # need this if we're just doing unbundled apps.
 $(call dist-for-goals,droidcore,$(LOCAL_INSTALLED_MODULE))
+endif
+
 endif
