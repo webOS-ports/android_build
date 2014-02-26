@@ -121,6 +121,40 @@ $(error Directory names containing spaces not supported)
 endif
 
 
+# Check for the correct version of java
+java_version := $(shell java -version 2>&1 | head -n 1 | grep '^java .*[ "]1\.[67][\. "$$]')
+ifneq ($(shell java -version 2>&1 | grep -i openjdk),)
+java_version :=
+endif
+ifeq ($(strip $(java_version)),)
+$(info ************************************************************)
+$(info You are attempting to build with an unsupported version)
+$(info of java.)
+$(info $(space))
+$(info Your version is: $(shell java -version 2>&1 | head -n 1).)
+$(info The correct version is: Java SE 1.6 or 1.7.)
+$(info $(space))
+$(info Please follow the machine setup instructions at)
+$(info $(space)$(space)$(space)$(space)https://source.android.com/source/download.html)
+$(info ************************************************************)
+endif
+
+# Check for the correct version of javac
+javac_version := $(shell javac -version 2>&1 | head -n 1 | grep '[ "]1\.[67][\. "$$]')
+ifeq ($(strip $(javac_version)),)
+$(info ************************************************************)
+$(info You are attempting to build with the incorrect version)
+$(info of javac.)
+$(info $(space))
+$(info Your version is: $(shell javac -version 2>&1 | head -n 1).)
+$(info The correct version is: 1.6 or 1.7.)
+$(info $(space))
+$(info Please follow the machine setup instructions at)
+$(info $(space)$(space)$(space)$(space)https://source.android.com/source/download.html)
+$(info ************************************************************)
+$(error stop)
+endif
+
 ifeq (darwin,$(HOST_OS))
 GCC_REALPATH = $(realpath $(shell which gcc))
 ifneq ($(findstring llvm-gcc,$(GCC_REALPATH)),)
@@ -479,10 +513,46 @@ else # ONE_SHOT_MAKEFILE
 # Include all of the makefiles in the system
 #
 
-# Can't use first-makefiles-under here because
-# --mindepth=2 makes the prunes not work.
+# This set of mk files is hand picked for hybris.
+
+# Some git repos pulled in from our minimal manifest have multiple
+# Android.mk files; some of them we don't need but they're there and
+# they have dependencies outside the minimal set. This means that we
+# either have to manage patches to the repos to remove them (ugh!) or
+# we simply manage the set of mk files here.
+
+# These are directories we scan for all Android.mk - keeps the
+# manually maintained list below smaller
+subdir_makefile_dirs := bionic bootable build device external hardware hybris libcore system
+
+# Need to skip:
+#  ./frameworks/native/opengl/tests/Android.mk
+#  ./prebuilts/$MANY
+# so for those dirs we explicitly list the Android.mk needed
+# for hybris
+
 subdir_makefiles := \
-	$(shell build/tools/findleaves.py --prune=out --prune=.repo --prune=.git $(subdirs) Android.mk)
+./frameworks/base/Android.mk \
+./frameworks/native/cmds/dumpstate/Android.mk \
+./frameworks/native/cmds/dumpsys/Android.mk \
+./frameworks/native/cmds/sensorservice/Android.mk \
+./frameworks/native/cmds/surfaceflinger/Android.mk \
+./frameworks/native/libs/binder/Android.mk \
+./frameworks/native/libs/cpustats/Android.mk \
+./frameworks/native/libs/gui/Android.mk \
+./frameworks/native/libs/ui/Android.mk \
+./frameworks/native/libs/utils/Android.mk \
+./frameworks/native/opengl/libagl/Android.mk \
+./frameworks/native/opengl/libs/Android.mk \
+./frameworks/native/services/powermanager/Android.mk \
+./frameworks/native/services/sensorservice/Android.mk \
+./frameworks/native/services/surfaceflinger/Android.mk \
+./frameworks/opt/emoji/Android.mk \
+./prebuilts/ndk/Android.mk \
+./prebuilts/tools/Android.mk \
+$(shell build/tools/findleaves.py --prune=out --prune=.repo --prune=.git $(subdir_makefile_dirs) Android.mk)
+
+# End of hybris mods
 
 include $(subdir_makefiles)
 
