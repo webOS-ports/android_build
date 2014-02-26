@@ -523,7 +523,7 @@ else # ONE_SHOT_MAKEFILE
 
 # These are directories we scan for all Android.mk - keeps the
 # manually maintained list below smaller
-subdir_makefile_dirs := bionic bootable build device external hardware hybris libcore system
+subdir_makefile_dirs := abi bionic bootable build device external hardware hybris libcore system
 
 # Need to skip:
 #  ./frameworks/native/opengl/tests/Android.mk
@@ -547,6 +547,14 @@ subdir_makefiles := \
 ./frameworks/native/services/powermanager/Android.mk \
 ./frameworks/native/services/sensorservice/Android.mk \
 ./frameworks/native/services/surfaceflinger/Android.mk \
+./frameworks/av/camera/Android.mk \
+./frameworks/av/media/common_time/Android.mk \
+./frameworks/av/media/libmedia/Android.mk \
+./frameworks/av/media/libmedia_native/Android.mk \
+./frameworks/av/media/libnbaio/Android.mk \
+./frameworks/av/media/libstagefright/Android.mk \
+./frameworks/av/drm/common/Android.mk \
+./frameworks/av/drm/libdrmframework/Android.mk \
 ./frameworks/opt/emoji/Android.mk \
 ./prebuilts/ndk/Android.mk \
 ./prebuilts/tools/Android.mk \
