@@ -12,7 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ifneq ($(TARGET_BUILD_PDK),true)
+#ifneq ($(TARGET_BUILD_PDK),true)
+ifeq (true, false)
+
 LOCAL_PATH := $(call my-dir)
 
 # We use copy-file-to-new-target so that the installed
