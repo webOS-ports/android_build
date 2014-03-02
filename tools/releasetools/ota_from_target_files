@@ -825,8 +825,7 @@ def main(argv):
     OPTIONS.device_specific = os.path.normpath(OPTIONS.device_specific)
     print "using device-specific extensions in", OPTIONS.device_specific
 
-   output_zip = zipfile.ZipFile(args[1], "w",
-                               compression=zipfile.ZIP_DEFLATED)
+   output_zip = zipfile.ZipFile(args[1], "w", compression=zipfile.ZIP_DEFLATED)
 
   if OPTIONS.incremental_source is None:
     WriteFullOTAPackage(input_zip, output_zip)
