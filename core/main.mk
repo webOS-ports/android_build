@@ -413,7 +413,111 @@ else	# !SDK_ONLY
 #
 # Typical build; include any Android.mk files we can find.
 #
-subdirs := $(TOP)
+subdirs := \
+	abi/cpp \
+	bionic \
+	bootable/recovery \
+	build/libs \
+	build/target \
+	build/tools/acp \
+	build/tools/check_prereq \
+	build/tools/fs_config \
+	build/tools/zipalign \
+	development/tools/emulator/opengl \
+	external/aac \
+	external/busybox \
+	external/bzip2 \
+	external/checkpolicy \
+	external/e2fsprogs \
+	external/expat \
+	external/flac \
+	external/freetype \
+	external/fsck_msdos \
+	external/gcc-demangle \
+	external/genext2fs \
+	external/giflib \
+	external/gtest \
+	external/icu4c \
+	external/jhead \
+	external/jpeg \
+	external/liblzf \
+	external/libgsm \
+	external/libpng \
+	external/libvpx \
+	external/libselinux \
+	external/libsepol \
+	external/mksh \
+	external/openssl \
+	external/pigz \
+	external/protobuf \
+	external/qemu \
+	external/scrypt \
+	external/sepolicy \
+	external/sfntly \
+	external/skia \
+	external/sonivox \
+	external/speex \
+	external/sqlite \
+	external/stlport \
+	external/tinycompress \
+	external/tinyalsa \
+	external/tremolo \
+	external/webp \
+	external/webrtc \
+	external/wpa_supplicant_6 \
+	external/wpa_supplicant_8 \
+	external/yaffs2 \
+	external/zlib \
+	frameworks/av/camera \
+	frameworks/av/drm \
+	frameworks/av/media/common_time \
+	frameworks/av/media/libcpustats \
+	frameworks/av/media/libaah_rtp \
+	frameworks/av/media/libeffects \
+	frameworks/av/media/libmedia \
+	frameworks/av/media/libmedia_native \
+	frameworks/av/media/libmediaplayerservice \
+	frameworks/av/media/libnbaio \
+	frameworks/av/media/libstagefright \
+	frameworks/av/media/mediaserver \
+	frameworks/av/services/audioflinger \
+	frameworks/av/services/medialog \
+	frameworks/av/services/camera/libcameraservice \
+	frameworks/base/cmds/bootanimation \
+	frameworks/base/cmds/screencap \
+	frameworks/base/libs/androidfw \
+	frameworks/base/libs/diskusage \
+	frameworks/base/services/input \
+	frameworks/base/tools/aapt \
+	frameworks/native/cmds/installd \
+	frameworks/native/cmds/sensorservice \
+	frameworks/native/cmds/servicemanager \
+	frameworks/native/cmds/surfaceflinger \
+	frameworks/native/libs \
+	frameworks/native/opengl \
+	frameworks/native/services \
+	frameworks/opt/emoji \
+	hardware \
+	prebuilts/tools/linux-x86/sdl \
+	sdk/emulator \
+	system/core \
+	system/vold \
+	system/bluetooth \
+	system/extras/ext4_utils \
+	system/extras/mkimage \
+	system/media/audio_utils \
+	system/media/camera \
+	system/media/audio_route \
+	system/su \
+	system/security/keystore \
+	system/security/softkeymaster
+
+# device and vendor
+subdirs += \
+	device/generic \
+	device/hp \
+	vendor/cm \
+	vendor/hp
 
 FULL_BUILD := true
 
@@ -454,54 +558,8 @@ ifneq ($(dont_bother),true)
 # Include all of the makefiles in the system
 #
 
-# This set of mk files is hand picked for hybris.
-
-# Some git repos pulled in from our minimal manifest have multiple
-# Android.mk files; some of them we don't need but they're there and
-# they have dependencies outside the minimal set. This means that we
-# either have to manage patches to the repos to remove them (ugh!) or
-# we simply manage the set of mk files here.
-
-# These are directories we scan for all Android.mk - keeps the
-# manually maintained list below smaller
-subdir_makefile_dirs := abi bionic bootable build device external hardware hybris libcore system
-
-# Need to skip:
-#  ./frameworks/native/opengl/tests/Android.mk
-#  ./prebuilts/$MANY
-# so for those dirs we explicitly list the Android.mk needed
-# for hybris
-
 subdir_makefiles := \
-./frameworks/base/Android.mk \
-./frameworks/native/cmds/dumpstate/Android.mk \
-./frameworks/native/cmds/dumpsys/Android.mk \
-./frameworks/native/cmds/sensorservice/Android.mk \
-./frameworks/native/cmds/surfaceflinger/Android.mk \
-./frameworks/native/libs/binder/Android.mk \
-./frameworks/native/libs/cpustats/Android.mk \
-./frameworks/native/libs/gui/Android.mk \
-./frameworks/native/libs/ui/Android.mk \
-./frameworks/native/libs/utils/Android.mk \
-./frameworks/native/opengl/libagl/Android.mk \
-./frameworks/native/opengl/libs/Android.mk \
-./frameworks/native/services/powermanager/Android.mk \
-./frameworks/native/services/sensorservice/Android.mk \
-./frameworks/native/services/surfaceflinger/Android.mk \
-./frameworks/av/camera/Android.mk \
-./frameworks/av/media/common_time/Android.mk \
-./frameworks/av/media/libmedia/Android.mk \
-./frameworks/av/media/libmedia_native/Android.mk \
-./frameworks/av/media/libnbaio/Android.mk \
-./frameworks/av/media/libstagefright/Android.mk \
-./frameworks/av/drm/common/Android.mk \
-./frameworks/av/drm/libdrmframework/Android.mk \
-./frameworks/opt/emoji/Android.mk \
-./prebuilts/ndk/Android.mk \
-./prebuilts/tools/Android.mk \
-$(shell build/tools/findleaves.py --prune=out --prune=.repo --prune=.git $(subdir_makefile_dirs) Android.mk)
-
-# End of hybris mods
+	$(shell build/tools/findleaves.py --prune=out --prune=.repo --prune=.git $(subdirs) Android.mk)
 
 $(foreach mk, $(subdir_makefiles), $(eval include $(mk)))
 
