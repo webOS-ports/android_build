@@ -427,6 +427,7 @@ subdirs := \
 	external/aac \
 	external/busybox \
 	external/bzip2 \
+	external/bsdiff \
 	external/checkpolicy \
 	external/e2fsprogs \
 	external/expat \
