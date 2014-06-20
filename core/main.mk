@@ -517,8 +517,21 @@ subdirs := \
 subdirs += \
 	device/generic \
 	device/hp \
+	device/lge \
+	device/samsung \
+	device/lge \
+	vendor/asus \
+	vendor/broadcom \
 	vendor/cm \
-	vendor/hp
+	vendor/elan \
+	vendor/hp \
+	vendor/invensense \
+	vendor/lge \
+	vendor/nvidia \
+	vendor/nxp \
+	vendor/samsung \
+	vendor/widevine
+
 
 FULL_BUILD := true
 
