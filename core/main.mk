@@ -533,6 +533,7 @@ subdir_makefile_dirs := abi bionic bootable build device external hardware hybri
 
 subdir_makefiles := \
 ./frameworks/base/Android.mk \
+./frameworks/base/native/android/Android.mk \
 ./frameworks/native/cmds/dumpstate/Android.mk \
 ./frameworks/native/cmds/dumpsys/Android.mk \
 ./frameworks/native/cmds/sensorservice/Android.mk \
