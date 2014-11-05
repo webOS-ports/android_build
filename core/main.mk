@@ -430,8 +430,10 @@ subdirs := \
 	external/bsdiff \
 	external/checkpolicy \
 	external/e2fsprogs \
+	external/exfat \
 	external/expat \
 	external/flac \
+	external/fuse \
 	external/freetype \
 	external/fsck_msdos \
 	external/gcc-demangle \
