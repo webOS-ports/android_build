@@ -513,7 +513,8 @@ subdirs := \
 	system/media/audio_route \
 	system/su \
 	system/security/keystore \
-	system/security/softkeymaster
+	system/security/softkeymaster \
+	wop/droidmedia
 
 # device and vendor
 subdirs += \
@@ -1022,7 +1023,7 @@ clobber: clean
 modules:
 	@echo -e ${CL_GRN}"Available sub-modules:"${CL_RST}
 	@echo "$(call module-names-for-tag-list,$(ALL_MODULE_TAGS))" | \
-	      tr -s ' ' '\n' | sort -u | $(COLUMN)
+	      tr -s ' ' '\n' | sort -u
 
 .PHONY: showcommands
 showcommands:
