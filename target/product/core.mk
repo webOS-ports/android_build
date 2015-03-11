@@ -163,5 +163,13 @@ ifeq ($(HAVE_SELINUX),true)
         mac_permissions.xml
 endif
 
+# For webOS ports
+PRODUCT_PACKAGES += \
+    libdroidmedia \
+    minimediaservice \
+    minisfservice \
+    test_droidmedia_codec \
+    test_droidmedia_camera
+
 $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 

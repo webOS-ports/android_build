@@ -548,11 +548,13 @@ subdir_makefiles := \
 ./frameworks/native/services/sensorservice/Android.mk \
 ./frameworks/native/services/surfaceflinger/Android.mk \
 ./frameworks/av/camera/Android.mk \
+./frameworks/av/services/camera/libcameraservice/Android.mk \
 ./frameworks/av/media/common_time/Android.mk \
 ./frameworks/av/media/libmedia/Android.mk \
 ./frameworks/av/media/libmedia_native/Android.mk \
 ./frameworks/av/media/libnbaio/Android.mk \
 ./frameworks/av/media/libstagefright/Android.mk \
+./frameworks/av/media/libmediaplayerservice/Android.mk \
 ./frameworks/av/drm/common/Android.mk \
 ./frameworks/av/drm/libdrmframework/Android.mk \
 ./frameworks/opt/emoji/Android.mk \
