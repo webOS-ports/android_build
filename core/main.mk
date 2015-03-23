@@ -514,7 +514,7 @@ subdirs := \
 	system/su \
 	system/security/keystore \
 	system/security/softkeymaster \
-	wop/droidmedia
+	hybris/droidmedia
 
 # device and vendor
 subdirs += \
