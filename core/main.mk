@@ -523,7 +523,7 @@ else # ONE_SHOT_MAKEFILE
 
 # These are directories we scan for all Android.mk - keeps the
 # manually maintained list below smaller
-subdir_makefile_dirs := abi bionic bootable build device external hardware hybris libcore system
+subdir_makefile_dirs := abi bionic bootable build device external hardware hybris libcore system vendor
 
 # Need to skip:
 #  ./frameworks/native/opengl/tests/Android.mk
