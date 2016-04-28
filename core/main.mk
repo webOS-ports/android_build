@@ -104,6 +104,9 @@ include $(BUILD_SYSTEM)/cleanbuild.mk
 # Bring in Qualcomm helper macros
 include $(BUILD_SYSTEM)/qcom_utils.mk
 
+# Bring in Mediatek helper macros too
+include $(BUILD_SYSTEM)/mtk_utils.mk
+
 # Include the google-specific config
 -include vendor/google/build/config.mk
 
@@ -144,8 +147,11 @@ $(warning ************************************************************)
 $(error Directory names containing spaces not supported)
 endif
 
+java_version_str := $(shell unset _JAVA_OPTIONS JAVA_TOOL_OPTIONS && java -version 2>&1)
+javac_version_str := $(shell unset _JAVA_OPTIONS JAVA_TOOL_OPTIONS && javac -version 2>&1)
+
 # Check for the corrent jdk
-ifneq ($(shell java -version 2>&1 | grep -i openjdk),)
+ifneq ($(shell echo '$(java_version_str)' | grep -i openjdk),)
 $(info ************************************************************)
 $(info You are attempting to build with an unsupported JDK.)
 $(info $(space))
@@ -155,6 +161,40 @@ $(info $(space)$(space)$(space)$(space)https://source.android.com/source/downloa
 $(info $(space))
 $(info Continue at your own peril!)
 $(info ************************************************************)
+endif
+
+# Check for the correct version of java
+java_version := $(shell echo '$(java_version_str)' | head -n 1 | grep '^java .*[ "]1\.[67][\. "$$]')
+ifneq ($(shell echo '$(java_version_str)' | grep -i openjdk),)
+java_version :=
+endif
+ifeq ($(strip $(java_version)),)
+$(info ************************************************************)
+$(info You are attempting to build with an unsupported version)
+$(info of java.)
+$(info $(space))
+$(info Your version is: $(shell echo '$(java_version_str)' | head -n 1).)
+$(info The correct version is: Java SE 1.6 or 1.7.)
+$(info $(space))
+$(info Please follow the machine setup instructions at)
+$(info $(space)$(space)$(space)$(space)https://source.android.com/source/download.html)
+$(info ************************************************************)
+endif
+
+# Check for the correct version of javac
+javac_version := $(shell echo '$(javac_version_str)' | head -n 1 | grep '[ "]1\.[67][\. "$$]')
+ifeq ($(strip $(javac_version)),)
+$(info ************************************************************)
+$(info You are attempting to build with the incorrect version)
+$(info of javac.)
+$(info $(space))
+$(info Your version is: $(shell echo '$(javac_version_str)' | head -n 1).)
+$(info The correct version is: 1.6 or 1.7.)
+$(info $(space))
+$(info Please follow the machine setup instructions at)
+$(info $(space)$(space)$(space)$(space)https://source.android.com/source/download.html)
+$(info ************************************************************)
+$(error stop)
 endif
 
 ifndef BUILD_EMULATOR
